@@ -6,7 +6,7 @@
 /*   By: quanguye <quanguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 11:33:06 by quanguye          #+#    #+#             */
-/*   Updated: 2024/07/29 16:18:01 by quanguye         ###   ########.fr       */
+/*   Updated: 2024/07/29 17:25:39 by quanguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,21 @@ Create the sorting algorithm
 
 int	main(int ac, char *argv[])
 {
-	t_stack	*head;
+	t_stack	*stack_a;
+	t_stack	*stack_b;
 
-	head = NULL;
+	stack_a = NULL;
+	stack_b = NULL;
 	if (ac < 2)
 	{
-		printf("Usage: ./program [nums]\n");
-		return (0);
+		printf("Usage: ./push_swap [nums]\n");
+		return (1);
 	}
-	initialize_stack(argv, &head);
-	print_list(head);
+	initialize_stack_a(argv + 1, &stack_a);
+	print_list(stack_a);
+	rotate(&stack_a);
+	print_list(stack_a);
+
 	return (0);
 }
 
@@ -68,40 +73,108 @@ t_stack	*create_node(int data)
 	return (new_node);
 }
 
-void	initialize_stack(char **argv, t_stack **head)
+int	initialize_stack_a(char **argv, t_stack **head)
 {
-	int		i;
 	t_stack	*new_node;
 	t_stack	*temp;
 
-	i = 1;
-	while (argv[i])
+	while (*argv)
 	{
+		new_node = create_node(ft_atoi(*argv));
+		if (new_node == NULL)
+			free_stack(head);
+		if (**argv < '0' || **argv > '9')
+			ft_printf("Error\n");
 		if (*head == NULL)
-			*head = create_node(ft_atoi(argv[i]));
+			*head = new_node;
 		else
 		{
-			new_node = create_node(ft_atoi(argv[i]));
 			temp = *head;
 			while (temp->next != NULL)
 				temp = temp->next;
 			temp->next = new_node;
 			new_node->prev = temp;
 		}
-		i++;
+		argv++;
 	}
+	return (1);
 }
 
 void	print_list(t_stack *head)
 {
-	t_stack	*current;
-
-	current = head;
-	printf("Linked List: ");
-	while (current != NULL)
+	printf("Stack: ");
+	while (head != NULL)
 	{
-		printf("%d ", current->data);
-		current = current->next;
+		printf("%d ", head->data);
+		head = head->next;
 	}
 	printf("\n");
+}
+
+void	free_stack(t_stack **head)
+{
+	t_stack	*temp;
+
+	while (*head != NULL)
+	{
+		temp = *head;
+		*head = (*head)->next;
+		free(temp);
+	}
+}
+
+void	swap(t_stack **head)
+{
+	t_stack	*temp;
+
+	if (*head == NULL || (*head)->next == NULL)
+		return ;
+	temp = *head;
+	*head = (*head)->next;
+	temp->next = (*head)->next;
+	(*head)->next = temp;
+}
+
+void	push(t_stack **head_a, t_stack **head_b)
+{
+	t_stack	*temp;
+
+	if (*head_b == NULL)
+		return ;
+	temp = *head_b;
+	*head_b = (*head_b)->next;
+	temp->next = *head_a;
+	*head_a = temp;
+}
+
+void	rotate(t_stack **head)
+{
+	t_stack	*last;
+
+	if (*head == NULL || (*head)->next == NULL)
+		return ;
+	last = *head;
+	while (last->next != NULL)
+		last = last->next;
+	last->next = *head;
+	(*head)->prev = last;
+	*head = (*head)->next;
+	(*head)->prev = NULL;
+	last->next->next = NULL;
+}
+
+void	reverse_rotate(t_stack **head)
+{
+	t_stack	*last;
+
+	if (*head == NULL || (*head)->next == NULL)
+		return ;
+	last = *head;
+	while (last->next != NULL)
+		last = last->next;
+	last->next = *head;
+	(*head)->prev = last;
+	*head = last;
+	(*head)->prev->next = NULL;
+	(*head)->prev = NULL;
 }

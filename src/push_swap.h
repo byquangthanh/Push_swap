@@ -6,7 +6,7 @@
 /*   By: quanguye <quanguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:16:50 by quanguye          #+#    #+#             */
-/*   Updated: 2024/07/29 16:17:25 by quanguye         ###   ########.fr       */
+/*   Updated: 2024/07/29 17:10:45 by quanguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,14 @@ typedef struct s_stack
 
 
 int		ft_printf(const char *format, ...);
-void	initialize_stack(char *argv[], t_stack **head);
+int		initialize_stack_a(char **argv, t_stack **head);
 t_stack	*create_node(int data);
 void	print_list(t_stack *head);
 int		ft_atoi(const char *str);
+void	free_stack(t_stack **head);
+void	swap(t_stack **head);
+void	push(t_stack **head_a, t_stack **head_b);
+void	reverse_rotate(t_stack **head);
+void	rotate(t_stack **head);
 
 #endif
