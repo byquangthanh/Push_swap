@@ -2,6 +2,7 @@
 	"files.associations": {
 		"stdarg.h": "c",
 		"stdlib.h": "c",
-		"stdint.h": "c"
+		"stdint.h": "c",
+		"push_swap.h": "c"
 	}
 }

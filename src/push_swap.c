@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quanguye <quanguye@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sixshooterx <sixshooterx@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 11:33:06 by quanguye          #+#    #+#             */
-/*   Updated: 2024/07/29 17:25:39 by quanguye         ###   ########.fr       */
+/*   Updated: 2024/08/02 13:32:15 by sixshooterx      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,16 +47,26 @@ int	main(int ac, char *argv[])
 
 	stack_a = NULL;
 	stack_b = NULL;
-	if (ac < 2)
+	if (ac == 2 && ft_strcmp(argv[1], "") == 0)
+		return (0);
+	else if (ac == 2)
+	{
+		argv = ft_split(argv[1], ' ');
+		initialize_stack_a(argv, &stack_a);
+	}
+	else if (ac < 2)
 	{
 		printf("Usage: ./push_swap [nums]\n");
 		return (1);
 	}
-	initialize_stack_a(argv + 1, &stack_a);
-	print_list(stack_a);
-	rotate(&stack_a);
-	print_list(stack_a);
-
+	else
+		initialize_stack_a(argv + 1, &stack_a);
+	if (find_duplicates(stack_a) == true)
+		ft_printf("duplicate\n");
+	else
+		ft_printf("no duplicate\n");
+	push_swap(&stack_a, &stack_b);
+	print_list('a' ,stack_a);
 	return (0);
 }
 
@@ -100,17 +110,6 @@ int	initialize_stack_a(char **argv, t_stack **head)
 	return (1);
 }
 
-void	print_list(t_stack *head)
-{
-	printf("Stack: ");
-	while (head != NULL)
-	{
-		printf("%d ", head->data);
-		head = head->next;
-	}
-	printf("\n");
-}
-
 void	free_stack(t_stack **head)
 {
 	t_stack	*temp;
@@ -121,60 +120,4 @@ void	free_stack(t_stack **head)
 		*head = (*head)->next;
 		free(temp);
 	}
-}
-
-void	swap(t_stack **head)
-{
-	t_stack	*temp;
-
-	if (*head == NULL || (*head)->next == NULL)
-		return ;
-	temp = *head;
-	*head = (*head)->next;
-	temp->next = (*head)->next;
-	(*head)->next = temp;
-}
-
-void	push(t_stack **head_a, t_stack **head_b)
-{
-	t_stack	*temp;
-
-	if (*head_b == NULL)
-		return ;
-	temp = *head_b;
-	*head_b = (*head_b)->next;
-	temp->next = *head_a;
-	*head_a = temp;
-}
-
-void	rotate(t_stack **head)
-{
-	t_stack	*last;
-
-	if (*head == NULL || (*head)->next == NULL)
-		return ;
-	last = *head;
-	while (last->next != NULL)
-		last = last->next;
-	last->next = *head;
-	(*head)->prev = last;
-	*head = (*head)->next;
-	(*head)->prev = NULL;
-	last->next->next = NULL;
-}
-
-void	reverse_rotate(t_stack **head)
-{
-	t_stack	*last;
-
-	if (*head == NULL || (*head)->next == NULL)
-		return ;
-	last = *head;
-	while (last->next != NULL)
-		last = last->next;
-	last->next = *head;
-	(*head)->prev = last;
-	*head = last;
-	(*head)->prev->next = NULL;
-	(*head)->prev = NULL;
 }
