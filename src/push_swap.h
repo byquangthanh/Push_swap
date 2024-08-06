@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sixshooterx <sixshooterx@student.42.fr>    +#+  +:+       +#+        */
+/*   By: quanguye <quanguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:16:50 by quanguye          #+#    #+#             */
-/*   Updated: 2024/08/02 13:31:45 by sixshooterx      ###   ########.fr       */
+/*   Updated: 2024/08/06 18:32:09 by quanguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,17 @@
 # include <stdint.h>
 # include <stdarg.h>
 # include <stdbool.h>
+# include  <limits.h>
 
 typedef struct s_stack
 {
 	int				data;
+	int				cost;
+	bool			above_median;
+	bool			cheapest;
+	int				index;
+
+	struct s_stack	*target;
 	struct s_stack	*next;
 	struct s_stack	*prev;
 }	t_stack;
@@ -44,5 +51,7 @@ bool	is_sorted(t_stack *stack);
 void	push_swap(t_stack **a, t_stack **b);
 void	tiny_sort(t_stack **a);
 bool	find_duplicates(t_stack *a);
+void	turk_algorithm(t_stack **a, t_stack **b);
+void	init_a_target_nodes(t_stack **stack_a, t_stack **stack_b);
 
 #endif

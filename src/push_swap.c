@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sixshooterx <sixshooterx@student.42.fr>    +#+  +:+       +#+        */
+/*   By: quanguye <quanguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 11:33:06 by quanguye          #+#    #+#             */
-/*   Updated: 2024/08/02 13:32:15 by sixshooterx      ###   ########.fr       */
+/*   Updated: 2024/08/06 18:31:57 by quanguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,20 @@ int	main(int ac, char *argv[])
 	else
 		initialize_stack_a(argv + 1, &stack_a);
 	if (find_duplicates(stack_a) == true)
+	{
 		ft_printf("duplicate\n");
+		exit(1);
+	}
 	else
 		ft_printf("no duplicate\n");
 	push_swap(&stack_a, &stack_b);
-	print_list('a' ,stack_a);
+	print_list('a', stack_a);
+	print_list('b', stack_b);
+	while (stack_a)
+	{
+		ft_printf("%d\n", stack_a->target->data);
+		stack_a = stack_a->next;
+	}
 	return (0);
 }
 
@@ -90,11 +99,11 @@ int	initialize_stack_a(char **argv, t_stack **head)
 
 	while (*argv)
 	{
+		if (ft_atoi(*argv) == 0 && ft_strcmp(*argv, "0") != 0)
+			exit(1);
 		new_node = create_node(ft_atoi(*argv));
 		if (new_node == NULL)
 			free_stack(head);
-		if (**argv < '0' || **argv > '9')
-			ft_printf("Error\n");
 		if (*head == NULL)
 			*head = new_node;
 		else

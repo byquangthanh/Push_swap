@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   algorithms.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sixshooterx <sixshooterx@student.42.fr>    +#+  +:+       +#+        */
+/*   By: quanguye <quanguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:08:14 by sixshooterx       #+#    #+#             */
-/*   Updated: 2024/08/02 13:30:10 by sixshooterx      ###   ########.fr       */
+/*   Updated: 2024/08/06 18:31:20 by quanguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,12 +40,95 @@ void	push_swap(t_stack **a, t_stack **b)
 {
 	if (is_sorted(*a))
 		ft_printf("it is sorted");
-	if (stack_len(*a) == 2)
+	else if (stack_len(*a) == 2)
 		swap(a, 'a');
 	else if (stack_len(*a) == 3)
 		tiny_sort(a);
+	else
+		turk_algorithm(a, b);
 
 }
+
+/*
+THE TURK ALGORITHM
+- push to stack b until there are 2 nodes in stack b
+- every a node has target node from stack b
+- target node is the closest smaller number to the b node
+- if no closest smaller number exists the tRGET IS MAX VALUE
+- find cheapest node to push
+- push cost - sum x operations to bring 'a' to top + sum y operations to bring target to top
+- we will then push each of the node from the stack a to stack b based on cost analysis
+- once we have 3 nodes in stack a we will use tiny sort to sort them
+- now we push nodes from stack_b to stack_a
+	- b node has the closest bigger number to the a node as the target
+	- if no closest bigger number exists the target is the min value
+- median determines we RRA or RA
+	- if target node a is above we will do RA
+	- if target node a is below we will do RRA
+	- complete with smallest number on top
+*/
+
+void	turk_algorithm(t_stack **a, t_stack **b)
+{
+	int	a_len;
+
+
+	a_len = stack_len(*a);
+	while (a_len-- > 3 && stack_len(*b) != 2)
+		push(b, a, 'b');
+	init_a_target_nodes(a, b);
+	while (stack_len(*a) != 3)
+	{
+		init_a_target_nodes(a, b);
+		// pushin_b(a, b);
+	}
+
+
+}
+
+// void	calculate_cost(t_stack **a, t_stack **b)
+// {
+
+// }
+
+void	init_a_target_nodes(t_stack **stack_a, t_stack **stack_b)
+{
+	t_stack	*current_a;
+	t_stack	*current_b;
+	t_stack	*target;
+	int		closest_smaller;
+
+	current_a = *stack_a;
+	while (current_a)
+	{
+		closest_smaller = INT_MIN;
+		target = NULL;
+		current_b = *stack_b;
+		while (current_b)
+		{
+			if (current_b->data < current_a->data
+				&& current_b->data > closest_smaller)
+			{
+				closest_smaller = current_b->data;
+				target = current_b;
+			}
+			current_b = current_b->next;
+		}
+		if (!target)
+		{
+			current_b = *stack_b;
+			while (current_b)
+			{
+				if (!target || current_b->data > target->data)
+					target = current_b;
+				current_b = current_b->next;
+			}
+		}
+		current_a->target = target;
+		current_a = current_a->next;
+	}
+}
+
 
 void	tiny_sort(t_stack **a)
 {

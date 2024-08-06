@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operations.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sixshooterx <sixshooterx@student.42.fr>    +#+  +:+       +#+        */
+/*   By: quanguye <quanguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:07:23 by sixshooterx       #+#    #+#             */
-/*   Updated: 2024/08/02 13:32:54 by sixshooterx      ###   ########.fr       */
+/*   Updated: 2024/08/06 15:30:42 by quanguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
