@@ -6,7 +6,7 @@
 /*   By: quanguye <quanguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 11:33:06 by quanguye          #+#    #+#             */
-/*   Updated: 2024/08/06 18:31:57 by quanguye         ###   ########.fr       */
+/*   Updated: 2024/08/19 16:15:58 by quanguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,15 +49,12 @@ int	main(int ac, char *argv[])
 	stack_b = NULL;
 	if (ac == 2 && ft_strcmp(argv[1], "") == 0)
 		return (0);
+	else if (ac < 2)
+		printf("Usage: ./push_swap [nums]\n");
 	else if (ac == 2)
 	{
 		argv = ft_split(argv[1], ' ');
 		initialize_stack_a(argv, &stack_a);
-	}
-	else if (ac < 2)
-	{
-		printf("Usage: ./push_swap [nums]\n");
-		return (1);
 	}
 	else
 		initialize_stack_a(argv + 1, &stack_a);
@@ -92,7 +89,7 @@ t_stack	*create_node(int data)
 	return (new_node);
 }
 
-int	initialize_stack_a(char **argv, t_stack **head)
+int	initialize_stack_a(char **argv, t_stack **stack_a)
 {
 	t_stack	*new_node;
 	t_stack	*temp;
@@ -103,12 +100,12 @@ int	initialize_stack_a(char **argv, t_stack **head)
 			exit(1);
 		new_node = create_node(ft_atoi(*argv));
 		if (new_node == NULL)
-			free_stack(head);
-		if (*head == NULL)
-			*head = new_node;
+			free_stack(stack_a);
+		if (*stack_a == NULL)
+			*stack_a = new_node;
 		else
 		{
-			temp = *head;
+			temp = *stack_a;
 			while (temp->next != NULL)
 				temp = temp->next;
 			temp->next = new_node;

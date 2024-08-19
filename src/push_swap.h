@@ -6,7 +6,7 @@
 /*   By: quanguye <quanguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:16:50 by quanguye          #+#    #+#             */
-/*   Updated: 2024/08/06 18:32:09 by quanguye         ###   ########.fr       */
+/*   Updated: 2024/08/19 16:16:33 by quanguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_stack
 
 
 int		ft_printf(const char *format, ...);
-int		initialize_stack_a(char **argv, t_stack **head);
+int		initialize_stack_a(char **argv, t_stack **stack_a);
 t_stack	*create_node(int data);
 void	print_list(char name, t_stack *head);
 int		ft_atoi(const char *str);
@@ -53,5 +53,6 @@ void	tiny_sort(t_stack **a);
 bool	find_duplicates(t_stack *a);
 void	turk_algorithm(t_stack **a, t_stack **b);
 void	init_a_target_nodes(t_stack **stack_a, t_stack **stack_b);
+void	update_stack_positions(t_stack **stack);
 
 #endif

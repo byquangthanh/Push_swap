@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   algorithms.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sixshooterx <sixshooterx@student.42.fr>    +#+  +:+       +#+        */
+/*   By: quanguye <quanguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:08:14 by sixshooterx       #+#    #+#             */
-/*   Updated: 2024/08/18 22:01:05 by sixshooterx      ###   ########.fr       */
+/*   Updated: 2024/08/19 16:52:49 by quanguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ void	turk_algorithm(t_stack **a, t_stack **b)
 
 
 	a_len = stack_len(*a);
-	while (a_len-- > 3 && stack_len(*b) != 2)
+	while (a_len-- > 3)
 		push(b, a, 'b');
 	init_a_target_nodes(a, b);
 	while (stack_len(*a) != 3)
@@ -85,14 +85,59 @@ void	turk_algorithm(t_stack **a, t_stack **b)
 
 }
 
-bool	is_median(t_stack **stack)
 {
-	
+	t_stack	*current_stack;
+	int		i;
+
+	i = 0;
+	current_stack = *stack;
+	while (current_stack != NULL)
+	{
+		current_stack->index = i;
+		i++;
+		current_stack = current_stack->next;
+	}
+}
+
+void	is_above_median(t_stack **stack)
+{
+	int		median;
+	t_stack	*current_stack;
+
+	current_stack = *stack;
+	median = stack_len(current_stack) / 2;
+	while(current_stack)
+	{
+		if (current_stack->index < median)
+			current_stack->above_median = false;
+		else
+			current_stack->above_median = true;
+		current_stack = current_stack->next;
+	}
 }
 
 void	calculate_cost(t_stack **a, t_stack **b)
 {
+	t_stack	*current_stack;
+	t_stack	*target;
+	int		cost;
 
+	current_stack = *a;
+	target = *b;
+	while (current_stack)
+	{
+		if (current_stack->above_median == true)
+		{
+			while (current_stack->index != 1)
+				rotate(a, 'a');
+		}
+		else
+		{
+			while (current_stack->index != 1)
+				reverse_rotate(a, 'a');
+		}
+		current_stack = current_stack->next;
+	}
 }
 
 void	find_closest_bigger(t_stack **stack_a, t_stack **stack_b)
@@ -123,7 +168,8 @@ void	find_closest_bigger(t_stack **stack_a, t_stack **stack_b)
 			current_a = *stack_a;
 			while (current_a)
 			{
-				if (current_a->data > current_a->next->data && current_a->next->data)
+				if (current_a->data > current_a->next->data
+					&& current_a->next->data)
 					target = current_a->next;
 				current_a = current_a->next;
 			}
