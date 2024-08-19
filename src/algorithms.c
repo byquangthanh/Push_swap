@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   algorithms.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quanguye <quanguye@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sixshooterx <sixshooterx@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:08:14 by sixshooterx       #+#    #+#             */
-/*   Updated: 2024/08/06 18:31:20 by quanguye         ###   ########.fr       */
+/*   Updated: 2024/08/18 22:01:05 by sixshooterx      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,19 +79,61 @@ void	turk_algorithm(t_stack **a, t_stack **b)
 	init_a_target_nodes(a, b);
 	while (stack_len(*a) != 3)
 	{
-		init_a_target_nodes(a, b);
-		// pushin_b(a, b);
+		find_closest_smaller(a, b);
 	}
 
 
 }
 
-// void	calculate_cost(t_stack **a, t_stack **b)
-// {
+bool	is_median(t_stack **stack)
+{
+	
+}
 
-// }
+void	calculate_cost(t_stack **a, t_stack **b)
+{
 
-void	init_a_target_nodes(t_stack **stack_a, t_stack **stack_b)
+}
+
+void	find_closest_bigger(t_stack **stack_a, t_stack **stack_b)
+{
+	t_stack	*current_a;
+	t_stack	*current_b;
+	t_stack	*target;
+	int		closest_bigger;
+
+	current_a = *stack_a;
+	while (current_b)
+	{
+		target = NULL;
+		closest_bigger = INT_MAX;
+		current_b = *stack_b;
+		while (current_a)
+		{
+			if (current_b < current_a
+				&& current_a->data < closest_bigger)
+			{
+				closest_bigger = current_a->data;
+				target = current_a;
+			}
+			current_a = current_a->next;
+		}
+		if (!target)
+		{
+			current_a = *stack_a;
+			while (current_a)
+			{
+				if (current_a->data > current_a->next->data && current_a->next->data)
+					target = current_a->next;
+				current_a = current_a->next;
+			}
+		}
+		current_b->target = target;
+		current_b = current_b->next;
+	}
+}
+
+void	find_closest_smaller(t_stack **stack_a, t_stack **stack_b)
 {
 	t_stack	*current_a;
 	t_stack	*current_b;
@@ -101,7 +143,7 @@ void	init_a_target_nodes(t_stack **stack_a, t_stack **stack_b)
 	current_a = *stack_a;
 	while (current_a)
 	{
-		closest_smaller = INT_MIN;
+		closest_smaller = INT_MAX;
 		target = NULL;
 		current_b = *stack_b;
 		while (current_b)
