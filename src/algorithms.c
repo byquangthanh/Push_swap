@@ -6,7 +6,7 @@
 /*   By: quanguye <quanguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:08:14 by sixshooterx       #+#    #+#             */
-/*   Updated: 2024/08/19 16:55:55 by quanguye         ###   ########.fr       */
+/*   Updated: 2024/08/19 17:11:05 by quanguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,13 @@ void	turk_algorithm(t_stack **a, t_stack **b)
 	while (stack_len(*a) != 3)
 	{
 		find_closest_smaller(a, b);
+		calculate_cost(a, b);
+		push_cheapest();
 	}
+}
 
+void	push_cheapest(t_stack **a, t_stack **b)
+{
 
 }
 
@@ -117,7 +122,7 @@ void	is_above_median(t_stack **stack)
 	}
 }
 
-void	calculate_cost(t_stack **a, t_stack **b)
+void	calculate_cost_for_a(t_stack **a, t_stack **b)
 {
 	t_stack	*current_stack;
 	t_stack	*target;
@@ -125,18 +130,9 @@ void	calculate_cost(t_stack **a, t_stack **b)
 
 	current_stack = *a;
 	target = *b;
-	while (current_stack)
+	while (current_stack != NULL)
 	{
-		if (current_stack->above_median == true)
-		{
-			while (current_stack->index != 1)
-				rotate(a, 'a');
-		}
-		else
-		{
-			while (current_stack->index != 1)
-				reverse_rotate(a, 'a');
-		}
+		current_stack->cost = stack_len
 		current_stack = current_stack->next;
 	}
 }
