@@ -6,7 +6,7 @@
 /*   By: quanguye <quanguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:08:14 by sixshooterx       #+#    #+#             */
-/*   Updated: 2024/08/19 16:52:49 by quanguye         ###   ########.fr       */
+/*   Updated: 2024/08/19 16:55:55 by quanguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ void	turk_algorithm(t_stack **a, t_stack **b)
 
 }
 
+void	update_stack_positions(t_stack **stack)
 {
 	t_stack	*current_stack;
 	int		i;
