@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   operations.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sixshooterx <sixshooterx@student.42.fr>    +#+  +:+       +#+        */
+/*   By: quanguye <quanguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:07:23 by sixshooterx       #+#    #+#             */
-/*   Updated: 2024/08/24 17:09:30 by sixshooterx      ###   ########.fr       */
+/*   Updated: 2024/08/27 16:34:20 by quanguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	rotate(t_stack **stack, char name)
 		ft_printf("RA\n");
 	else if (name == 'b')
 		ft_printf("RB\n");
-	else
+	else if (name == 'r')
 		ft_printf("RR\n");
 }
 
@@ -105,4 +105,18 @@ void	reverse_rotate(t_stack **stack, char name)
 		ft_printf("RRB\n");
 	else
 		ft_printf("RRR\n");
+}
+
+void	rr(t_stack **a, t_stack **b)
+{
+	rotate(a, 'n');
+	rotate(b, 'n');
+	ft_printf("RR\n");
+}
+
+void	rrr(t_stack **a, t_stack **b)
+{
+	reverse_rotate(a, 'n');
+	reverse_rotate(b, 'n');
+	ft_printf("RRR\n");
 }

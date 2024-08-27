@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sixshooterx <sixshooterx@student.42.fr>    +#+  +:+       +#+        */
+/*   By: quanguye <quanguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 11:33:06 by quanguye          #+#    #+#             */
-/*   Updated: 2024/08/24 17:26:20 by sixshooterx      ###   ########.fr       */
+/*   Updated: 2024/08/27 15:51:52 by quanguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,10 @@ int	main(int ac, char *argv[])
 	if (ac == 2 && ft_strcmp(argv[1], "") == 0)
 		return (0);
 	else if (ac < 2)
+	{
 		printf("Usage: ./push_swap [nums]\n");
+		exit(1);
+	}
 	else if (ac == 2)
 	{
 		argv = ft_split(argv[1], ' ');

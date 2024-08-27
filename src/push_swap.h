@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sixshooterx <sixshooterx@student.42.fr>    +#+  +:+       +#+        */
+/*   By: quanguye <quanguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:16:50 by quanguye          #+#    #+#             */
-/*   Updated: 2024/08/24 16:51:15 by sixshooterx      ###   ########.fr       */
+/*   Updated: 2024/08/27 18:07:20 by quanguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,14 @@ void	turk_algorithm(t_stack **a, t_stack **b);
 void	find_closest_bigger(t_stack **stack_a, t_stack **stack_b);
 void	find_closest_smaller(t_stack **stack_a, t_stack **stack_b);
 void	calculate_cost_for_a(t_stack **stack);
-void	is_above_median(t_stack **stack);
+void	is_above_median(t_stack *stack);
 void	update_stack_positions(t_stack **a, t_stack **b);
+void	push_cheapest_a(t_stack **a, t_stack **b);
+t_stack	*find_cheapest(t_stack *stack);
+void	rrr(t_stack **a, t_stack **b);
+void	rr(t_stack **a, t_stack **b);
+void	calculate_cost_for_b(t_stack *b, t_stack *a);
+void	push_cheapest_b(t_stack **a, t_stack **b);
+
 
 #endif

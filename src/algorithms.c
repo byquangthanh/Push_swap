@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   algorithms.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sixshooterx <sixshooterx@student.42.fr>    +#+  +:+       +#+        */
+/*   By: quanguye <quanguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:08:14 by sixshooterx       #+#    #+#             */
-/*   Updated: 2024/08/25 10:41:12 by sixshooterx      ###   ########.fr       */
+/*   Updated: 2024/08/27 18:18:06 by quanguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,8 @@ void	turk_algorithm(t_stack **a, t_stack **b)
 	int	a_len;
 
 	a_len = stack_len(*a);
-	while (a_len-- > 3)
+
+	while (a_len-- > 3 && stack_len(*b) < 2)
 		push(b, a, 'b');
 	while (stack_len(*a) != 3)
 	{
@@ -82,13 +83,145 @@ void	turk_algorithm(t_stack **a, t_stack **b)
 		calculate_cost_for_a(a);
 		push_cheapest_a(a, b);
 	}
+	tiny_sort(a);
+	find_closest_bigger(a, b);
+	while (stack_len(*b) != 0)
+	{
+		find_closest_bigger(a, b);
+		update_stack_positions(a, b);
+		is_above_median(*a);
+		calculate_cost_for_b(*a, *b);
+		push_cheapest_b(a, b);
+	}
+	while (!is_sorted(*a))
+		reverse_rotate(a, 'a');
+}
+
+void	push_cheapest_b(t_stack **a, t_stack **b)
+{
+	t_stack	*cheapest;
+	int		a_rotations;
+	int		b_rotations;
+	int		len_a;
+
+	cheapest = find_cheapest(*b);
+	len_a = stack_len(*a);
+	a_rotations = cheapest->target->index;
+	b_rotations = cheapest->index;
+	if (cheapest->target->above_median)
+	{
+		while (b_rotations > 0)
+		{
+			rotate(b, 'b');
+			b_rotations--;
+		}
+
+		while (a_rotations > 0)
+		{
+			rotate(a, 'a');
+			a_rotations--;
+		}
+
+	}
+	else if (!cheapest->target->above_median)
+	{
+		while (b_rotations > 0)
+		{
+			rotate(b, 'b');
+			b_rotations--;
+		}
+		while (a_rotations < len_a)
+		{
+			reverse_rotate(a, 'a');
+			a_rotations++;
+		}
+	}
+	push(a, b, 'a');
+}
+
+void	calculate_cost_for_b(t_stack *a, t_stack *b)
+{
+	t_stack	*current_b;
+	t_stack	*current_target;
+
+	current_b = b;
+	current_target = current_b->target;
+
+	while (current_b)
+	{
+			if (current_b->target->above_median)
+				current_b->cost = (current_b->index)
+					+ (current_b->target->index);
+			else if (!current_b->target->above_median)
+				current_b->cost = (current_b->index)
+					+ (stack_len(a) - current_b->target->index);
+		current_b = current_b->next;
+	}
 }
 
 void	push_cheapest_a(t_stack **a, t_stack **b)
 {
-	t_stack	*current_a;
-	t_stack	*current_b;
+	t_stack	*cheapest;
+	int		a_rotations;
+	int		b_rotations;
 
+	cheapest = find_cheapest(*a);
+	a_rotations = cheapest->index;
+	b_rotations = cheapest->target->index;
+	while (a_rotations > 0 && b_rotations > 0)
+	{
+		rotate(a, 'r');
+		rotate(b, 'r');
+		a_rotations--;
+		b_rotations--;
+	}
+	while (a_rotations > 0)
+	{
+		rotate(a, 'a');
+		a_rotations--;
+	}
+	while (b_rotations > 0)
+	{
+		rotate(b, 'b');
+		b_rotations--;
+	}
+	push(b, a, 'b');
+}
+
+t_stack	*find_cheapest(t_stack *stack)
+{
+	t_stack	*cheapest;
+	t_stack	*current;
+
+	cheapest = stack;
+	current = stack;
+	while (current != NULL)
+	{
+		if (current->cost < cheapest->cost)
+			cheapest = current;
+		current = current->next;
+	}
+	return (cheapest);
+}
+
+void	is_above_median(t_stack *stack)
+{
+	int		stack_size;
+	int		i;
+	t_stack	*current;
+
+	stack_size = stack_len(stack);
+	i = 0;
+	current = stack;
+	while (current)
+	{
+		if (i < stack_size / 2)
+			current->above_median = true;
+		else
+			current->above_median = false;
+		current = current->next;
+		i++;
+	}
 }
 
 void	update_stack_positions(t_stack **a, t_stack **b)
@@ -115,23 +248,6 @@ void	update_stack_positions(t_stack **a, t_stack **b)
 	}
 }
 
-void	is_above_median(t_stack **stack)
-{
-	int		median;
-	t_stack	*current_stack;
-
-	current_stack = *stack;
-	median = stack_len(current_stack) / 2;
-	while (current_stack)
-	{
-		if (current_stack->index < median)
-			current_stack->above_median = false;
-		else
-			current_stack->above_median = true;
-		current_stack = current_stack->next;
-	}
-}
-
 void	calculate_cost_for_a(t_stack **stack)
 {
 	t_stack	*current_stack;
@@ -143,28 +259,28 @@ void	calculate_cost_for_a(t_stack **stack)
 
 	while (current_stack != NULL)
 	{
-		current_stack->cost = (current_stack->index) 
+		current_stack->cost = (current_stack->index)
 			+ (current_stack->target->index);
 		current_stack = current_stack->next;
 	}
 }
 
-void	find_closest_bigger(t_stack **stack_a, t_stack **stack_b)
+void    find_closest_bigger(t_stack **stack_a, t_stack **stack_b)
 {
 	t_stack	*current_a;
 	t_stack	*current_b;
 	t_stack	*target;
 	int		closest_bigger;
 
-	current_a = *stack_a;
+	current_b = *stack_b;
 	while (current_b)
 	{
 		target = NULL;
 		closest_bigger = INT_MAX;
-		current_b = *stack_b;
+		current_a = *stack_a;
 		while (current_a)
 		{
-			if (current_b < current_a
+			if (current_b->data < current_a->data
 				&& current_a->data < closest_bigger)
 			{
 				closest_bigger = current_a->data;
@@ -175,11 +291,11 @@ void	find_closest_bigger(t_stack **stack_a, t_stack **stack_b)
 		if (!target)
 		{
 			current_a = *stack_a;
+			target = current_a;
 			while (current_a)
 			{
-				if (current_a->data > current_a->next->data
-					&& current_a->next->data)
-					target = current_a->next;
+				if (current_a->data < target->data)
+					target = current_a;
 				current_a = current_a->next;
 			}
 		}
