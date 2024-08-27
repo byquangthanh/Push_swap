@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quanguye <quanguye@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sixshooterx <sixshooterx@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:16:50 by quanguye          #+#    #+#             */
-/*   Updated: 2024/08/19 16:16:33 by quanguye         ###   ########.fr       */
+/*   Updated: 2024/08/24 16:51:15 by sixshooterx      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,10 @@ void	push_swap(t_stack **a, t_stack **b);
 void	tiny_sort(t_stack **a);
 bool	find_duplicates(t_stack *a);
 void	turk_algorithm(t_stack **a, t_stack **b);
-void	init_a_target_nodes(t_stack **stack_a, t_stack **stack_b);
-void	update_stack_positions(t_stack **stack);
+void	find_closest_bigger(t_stack **stack_a, t_stack **stack_b);
+void	find_closest_smaller(t_stack **stack_a, t_stack **stack_b);
+void	calculate_cost_for_a(t_stack **stack);
+void	is_above_median(t_stack **stack);
+void	update_stack_positions(t_stack **a, t_stack **b);
 
 #endif

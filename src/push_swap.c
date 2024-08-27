@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: quanguye <quanguye@student.42.fr>          +#+  +:+       +#+        */
+/*   By: sixshooterx <sixshooterx@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 11:33:06 by quanguye          #+#    #+#             */
-/*   Updated: 2024/08/19 16:15:58 by quanguye         ###   ########.fr       */
+/*   Updated: 2024/08/24 17:26:20 by sixshooterx      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,6 @@ int	main(int ac, char *argv[])
 	push_swap(&stack_a, &stack_b);
 	print_list('a', stack_a);
 	print_list('b', stack_b);
-	while (stack_a)
-	{
-		ft_printf("%d\n", stack_a->target->data);
-		stack_a = stack_a->next;
-	}
 	return (0);
 }
 
@@ -86,6 +81,11 @@ t_stack	*create_node(int data)
 	new_node->data = data;
 	new_node->next = NULL;
 	new_node->prev = NULL;
+	new_node->target = NULL;
+	new_node->cost = 0;
+	new_node->index = 0;
+	new_node->above_median = false;
+	new_node->cheapest = false;
 	return (new_node);
 }
 
@@ -114,16 +114,4 @@ int	initialize_stack_a(char **argv, t_stack **stack_a)
 		argv++;
 	}
 	return (1);
-}
-
-void	free_stack(t_stack **head)
-{
-	t_stack	*temp;
-
-	while (*head != NULL)
-	{
-		temp = *head;
-		*head = (*head)->next;
-		free(temp);
-	}
 }
