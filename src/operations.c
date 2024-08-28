@@ -6,7 +6,7 @@
 /*   By: quanguye <quanguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:07:23 by sixshooterx       #+#    #+#             */
-/*   Updated: 2024/08/27 16:34:20 by quanguye         ###   ########.fr       */
+/*   Updated: 2024/08/28 17:20:38 by quanguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ void	swap(t_stack **stack, char name)
 		first->next->prev = first;
 	*stack = second;
 	if (name == 'a')
-		ft_printf("SA\n");
+		ft_printf("sa\n");
 	else if (name == 'b')
-		ft_printf("SB\n");
+		ft_printf("sb\n");
 	else
-		ft_printf("SS\n");
+		ft_printf("ss\n");
 }
 
 void	push(t_stack **stack_dest, t_stack **stack_src, char name)
@@ -52,9 +52,9 @@ void	push(t_stack **stack_dest, t_stack **stack_src, char name)
 		(*stack_dest)->prev = temp;
 	*stack_dest = temp;
 	if (name == 'a')
-		ft_printf("PA\n");
+		ft_printf("pa\n");
 	else if (name == 'b')
-		ft_printf("PB\n");
+		ft_printf("pb\n");
 }
 
 void	rotate(t_stack **stack, char name)
@@ -74,11 +74,11 @@ void	rotate(t_stack **stack, char name)
 	first->prev = last;
 	first->next = NULL;
 	if (name == 'a')
-		ft_printf("RA\n");
+		ft_printf("ra\n");
 	else if (name == 'b')
-		ft_printf("RB\n");
+		ft_printf("rb\n");
 	else if (name == 'r')
-		ft_printf("RR\n");
+		ft_printf("rr\n");
 }
 
 void	reverse_rotate(t_stack **stack, char name)
@@ -100,23 +100,21 @@ void	reverse_rotate(t_stack **stack, char name)
 	second_last->next = NULL;
 	*stack = last;
 	if (name == 'a')
-		ft_printf("RRA\n");
+		ft_printf("rra\n");
 	else if (name == 'b')
-		ft_printf("RRB\n");
-	else
-		ft_printf("RRR\n");
+		ft_printf("rrb\n");
 }
 
 void	rr(t_stack **a, t_stack **b)
 {
 	rotate(a, 'n');
 	rotate(b, 'n');
-	ft_printf("RR\n");
+	ft_printf("rr\n");
 }
 
 void	rrr(t_stack **a, t_stack **b)
 {
 	reverse_rotate(a, 'n');
 	reverse_rotate(b, 'n');
-	ft_printf("RRR\n");
+	ft_printf("rrr\n");
 }

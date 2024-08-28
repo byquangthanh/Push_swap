@@ -6,7 +6,7 @@
 /*   By: quanguye <quanguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:16:50 by quanguye          #+#    #+#             */
-/*   Updated: 2024/08/27 18:07:20 by quanguye         ###   ########.fr       */
+/*   Updated: 2024/08/28 17:19:58 by quanguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef struct s_stack
 
 
 int		ft_printf(const char *format, ...);
-int		initialize_stack_a(char **argv, t_stack **stack_a);
+int		initialize_stack_a(char **argv, t_stack **stack_a, int *i);
 t_stack	*create_node(int data);
 void	print_list(char name, t_stack *head);
 int		ft_atoi(const char *str);
@@ -50,11 +50,10 @@ int		stack_len(t_stack *stack);
 bool	is_sorted(t_stack *stack);
 void	push_swap(t_stack **a, t_stack **b);
 void	tiny_sort(t_stack **a);
-bool	find_duplicates(t_stack *a);
+int		find_duplicates(t_stack *a);
 void	turk_algorithm(t_stack **a, t_stack **b);
 void	find_closest_bigger(t_stack **stack_a, t_stack **stack_b);
 void	find_closest_smaller(t_stack **stack_a, t_stack **stack_b);
-void	calculate_cost_for_a(t_stack **stack);
 void	is_above_median(t_stack *stack);
 void	update_stack_positions(t_stack **a, t_stack **b);
 void	push_cheapest_a(t_stack **a, t_stack **b);
@@ -63,6 +62,16 @@ void	rrr(t_stack **a, t_stack **b);
 void	rr(t_stack **a, t_stack **b);
 void	calculate_cost_for_b(t_stack *b, t_stack *a);
 void	push_cheapest_b(t_stack **a, t_stack **b);
-
+void	free_splitted_array(char **array);
+void	free_array(char **splitted_array);
+void	free_stack_and_error(t_stack **head);
+void	calculate_cost_for_a(t_stack **a, t_stack **b);
+void	calculate_cost_for_b(t_stack *a, t_stack *b);
+void	rotate_both_a(t_stack **a, t_stack **b, t_stack *cheapest);
+void	rev_rotate_both_a(t_stack **a, t_stack **b, t_stack *cheapest);
+void	rotate_separate_a(t_stack **a, t_stack **b, t_stack *cheapest);
+void	rotate_both_b(t_stack **a, t_stack **b, t_stack *cheapest);
+void	rev_rotate_both_b(t_stack **a, t_stack **b, t_stack *cheapest);
+void	rotate_separate_b(t_stack **a, t_stack **b, t_stack *cheapest);
 
 #endif

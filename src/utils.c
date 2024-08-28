@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: sixshooterx <sixshooterx@student.42.fr>    +#+  +:+       +#+        */
+/*   By: quanguye <quanguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/02 10:00:14 by sixshooterx       #+#    #+#             */
-/*   Updated: 2024/08/24 17:20:07 by sixshooterx      ###   ########.fr       */
+/*   Updated: 2024/08/28 16:36:37 by quanguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	print_list(char name, t_stack *head)
 	printf("\n");
 }
 
-bool	find_duplicates(t_stack *a)
+int	find_duplicates(t_stack *a)
 {
 	t_stack	*current;
 	t_stack	*compare;
@@ -58,12 +58,16 @@ bool	find_duplicates(t_stack *a)
 		while (compare != NULL)
 		{
 			if (current->data == compare->data)
-				return (true);
+			{
+				// ft_printf("duplicate found");
+				return (1);
+			}
 			compare = compare->next;
 		}
 		current = current->next;
 	}
-	return (false);
+	// ft_printf("no duplicate found");
+	return (0);
 }
 
 void	free_stack(t_stack **head)
@@ -76,4 +80,17 @@ void	free_stack(t_stack **head)
 		*head = (*head)->next;
 		free(temp);
 	}
+}
+
+void	free_stack_and_error(t_stack **head)
+{
+	t_stack	*temp;
+
+	while (*head != NULL)
+	{
+		temp = *head;
+		*head = (*head)->next;
+		free(temp);
+	}
+	ft_printf("Error");
 }

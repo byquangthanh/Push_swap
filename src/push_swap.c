@@ -6,7 +6,7 @@
 /*   By: quanguye <quanguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 11:33:06 by quanguye          #+#    #+#             */
-/*   Updated: 2024/08/27 15:51:52 by quanguye         ###   ########.fr       */
+/*   Updated: 2024/08/28 16:54:01 by quanguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,37 +40,60 @@ Create the sorting algorithm
 
 #include "push_swap.h"
 
-int	main(int ac, char *argv[])
+void	handle_error(t_stack **stack_a, char **splitted_nums)
 {
-	t_stack	*stack_a;
-	t_stack	*stack_b;
+	if (*stack_a)
+		free_stack(stack_a);
+	if (splitted_nums)
+		free_array(splitted_nums);
+	exit(1);
+}
 
-	stack_a = NULL;
-	stack_b = NULL;
+int	handle_input(int ac, char **argv, t_stack **stack_a, char ***splitted_nums)
+{
+	int	i;
+
+	i = 0;
 	if (ac == 2 && ft_strcmp(argv[1], "") == 0)
 		return (0);
-	else if (ac < 2)
+	if (ac < 2)
 	{
 		printf("Usage: ./push_swap [nums]\n");
 		exit(1);
 	}
-	else if (ac == 2)
+	if (ac == 2)
 	{
-		argv = ft_split(argv[1], ' ');
-		initialize_stack_a(argv, &stack_a);
+		*splitted_nums = ft_split(argv[1], ' ');
+		initialize_stack_a(*splitted_nums, stack_a, &i);
 	}
 	else
-		initialize_stack_a(argv + 1, &stack_a);
-	if (find_duplicates(stack_a) == true)
+		initialize_stack_a(argv + 1, stack_a, &i);
+	if (i == 1)
 	{
-		ft_printf("duplicate\n");
+		ft_printf("Error");
+		handle_error(stack_a, *splitted_nums);
 		exit(1);
 	}
-	else
-		ft_printf("no duplicate\n");
+	return (1);
+}
+
+int	main(int ac, char *argv[])
+{
+	t_stack	*stack_a;
+	t_stack	*stack_b;
+	char	**splitted_nums;
+
+	stack_a = NULL;
+	stack_b = NULL;
+	splitted_nums = NULL;
+	if (!handle_input(ac, argv, &stack_a, &splitted_nums))
+		return (0);
+	if (find_duplicates(stack_a))
+		handle_error(&stack_a, splitted_nums);
 	push_swap(&stack_a, &stack_b);
-	print_list('a', stack_a);
-	print_list('b', stack_b);
+	free_stack(&stack_a);
+	if (splitted_nums)
+		free_array(splitted_nums);
 	return (0);
 }
 
@@ -92,7 +115,7 @@ t_stack	*create_node(int data)
 	return (new_node);
 }
 
-int	initialize_stack_a(char **argv, t_stack **stack_a)
+int	initialize_stack_a(char **argv, t_stack **stack_a, int *i)
 {
 	t_stack	*new_node;
 	t_stack	*temp;
@@ -100,7 +123,7 @@ int	initialize_stack_a(char **argv, t_stack **stack_a)
 	while (*argv)
 	{
 		if (ft_atoi(*argv) == 0 && ft_strcmp(*argv, "0") != 0)
-			exit(1);
+			*i = 1;
 		new_node = create_node(ft_atoi(*argv));
 		if (new_node == NULL)
 			free_stack(stack_a);
@@ -117,4 +140,19 @@ int	initialize_stack_a(char **argv, t_stack **stack_a)
 		argv++;
 	}
 	return (1);
+}
+
+void	free_array(char **splitted_array)
+{
+	int	i;
+
+	if (splitted_array == NULL)
+		return ;
+	i = 0;
+	while (splitted_array[i])
+	{
+		free(splitted_array[i]);
+		i++;
+	}
+	free(splitted_array);
 }
