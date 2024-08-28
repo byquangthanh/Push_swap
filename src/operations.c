@@ -6,7 +6,7 @@
 /*   By: quanguye <quanguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/01 16:07:23 by sixshooterx       #+#    #+#             */
-/*   Updated: 2024/08/28 17:20:38 by quanguye         ###   ########.fr       */
+/*   Updated: 2024/08/28 18:11:03 by quanguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,11 +110,4 @@ void	rr(t_stack **a, t_stack **b)
 	rotate(a, 'n');
 	rotate(b, 'n');
 	ft_printf("rr\n");
-}
-
-void	rrr(t_stack **a, t_stack **b)
-{
-	reverse_rotate(a, 'n');
-	reverse_rotate(b, 'n');
-	ft_printf("rrr\n");
 }

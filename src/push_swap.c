@@ -6,7 +6,7 @@
 /*   By: quanguye <quanguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 11:33:06 by quanguye          #+#    #+#             */
-/*   Updated: 2024/08/28 16:54:01 by quanguye         ###   ########.fr       */
+/*   Updated: 2024/08/28 18:12:48 by quanguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,12 +25,16 @@ Create the operations
 - PA : push a - take the first element at the top of b and put it at the top of a
 - PB : push b - take the first element at the top of a and put it at the top of b
 
-- RA : rotate a - shift up all elements of stack a by 1. The first element becomes the last one
-- RB : rotate b - shift up all elements of stack b by 1. The first element becomes the last one
+- RA : rotate a - shift up all elements of stack a by 1.
+ The first element becomes the last one
+- RB : rotate b - shift up all elements of stack b by 1.
+The first element becomes the last one
 - RR : RA and RB at the same time
 
-- RRA : reverse rotate a - shift down all elements of stack a by 1. The last element becomes the first one
-- RRB : reverse rotate b - shift down all elements of stack b by 1. The last element becomes the first one
+- RRA : reverse rotate a - shift down all elements of stack a by 1.
+The last element becomes the first one
+- RRB : reverse rotate b - shift down all elements of stack b by 1.
+The last element becomes the first one
 - RRR : RRA and RRB at the same time
 
 Create the sorting algorithm
@@ -140,19 +144,4 @@ int	initialize_stack_a(char **argv, t_stack **stack_a, int *i)
 		argv++;
 	}
 	return (1);
-}
-
-void	free_array(char **splitted_array)
-{
-	int	i;
-
-	if (splitted_array == NULL)
-		return ;
-	i = 0;
-	while (splitted_array[i])
-	{
-		free(splitted_array[i]);
-		i++;
-	}
-	free(splitted_array);
 }

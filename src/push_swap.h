@@ -6,7 +6,7 @@
 /*   By: quanguye <quanguye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/23 14:16:50 by quanguye          #+#    #+#             */
-/*   Updated: 2024/08/28 17:19:58 by quanguye         ###   ########.fr       */
+/*   Updated: 2024/08/28 18:11:53 by quanguye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <stdint.h>
 # include <stdarg.h>
 # include <stdbool.h>
-# include  <limits.h>
+# include <limits.h>
 
 typedef struct s_stack
 {
@@ -32,7 +32,6 @@ typedef struct s_stack
 	struct s_stack	*next;
 	struct s_stack	*prev;
 }	t_stack;
-
 
 int		ft_printf(const char *format, ...);
 int		initialize_stack_a(char **argv, t_stack **stack_a, int *i);
@@ -73,5 +72,11 @@ void	rotate_separate_a(t_stack **a, t_stack **b, t_stack *cheapest);
 void	rotate_both_b(t_stack **a, t_stack **b, t_stack *cheapest);
 void	rev_rotate_both_b(t_stack **a, t_stack **b, t_stack *cheapest);
 void	rotate_separate_b(t_stack **a, t_stack **b, t_stack *cheapest);
+t_stack	*find_closest_bigger_element(t_stack *current,
+			t_stack *stack, int *closest);
+t_stack	*find_min_element(t_stack *stack);
+t_stack	*find_closest_smaller_element(t_stack *current,
+			t_stack *stack, int *closest);
+t_stack	*find_max_element(t_stack *stack);
 
 #endif
