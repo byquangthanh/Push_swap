@@ -6,7 +6,7 @@
 /*   By: sixshooterx <sixshooterx@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/26 13:08:54 by sixshooterx       #+#    #+#             */
-/*   Updated: 2023/11/02 20:13:14 by sixshooterx      ###   ########.fr       */
+/*   Updated: 2024/09/08 16:27:31 by sixshooterx      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ int	ft_atoi(const char *str)
 		sum = sum * 10 + (str[i] - '0');
 		i++;
 	}
+	if (!(str[i] <= '9' && str[i] >= '0') && str[i] != '\0')
+		return (0);
 	return (sum * neg);
 }
 
